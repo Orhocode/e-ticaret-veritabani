@@ -57,7 +57,7 @@ Amacı, kullanıcı yönetimi, ürün katalogları, sipariş süreçleri, ödeme
 2. `01_create_tables.sql` dosyasını çalıştırarak veritabanı tablolarını oluşturun.
 3. `02_insert_data.sql` dosyasını çalıştırarak örnek verileri ekleyin.
 4. `03_trigger_and_update_sql` dosyasını çalıştırarak dinamik işlemleri yapın.
-5. ``04_querry.sql` dosyasını çalıştırarak örnek sorgulara erişin.
+5. `04_querry.sql` dosyasını çalıştırarak örnek sorgulara erişin.
 
 
 
