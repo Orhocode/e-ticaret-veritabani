@@ -1,4 +1,4 @@
---Siparis Oluþturulunca Sepet Durumunu Tamamlandý Yapan TRIGGER
+--Siparis Olusturulunca Sepet Durumunu Tamamlandi Yapan TRIGGER
 GO
 CREATE TRIGGER Siparis_Eklendi_
 ON Siparisler
@@ -6,31 +6,31 @@ AFTER INSERT
 AS
 BEGIN
     UPDATE S
-    SET S.Durum = 'Tamamlandý'
+    SET S.Durum = 'Tamamlandi'
     FROM dbo.Sepet S
     INNER JOIN inserted I ON S.SepetID = I.SepetID;
 END
 GO
 
---Tamamlandý Durumundaki Siparisler Ýcin Musteriye Puan Kazandýran TRIGGER
+--Tamamlandi Durumundaki Siparisler icin Musteriye Puan Kazandiran TRIGGER
 GO
 CREATE TRIGGER KazanilanPuan
 ON Siparisler
 After Update AS
 BEGIN 
 	INSERT INTO MusteriPuanlari(MusteriID,SiparisID,IslemTipi,PuanDegeri,Aciklama)
-	SELECT  I.MusteriID,I.SiparisID,'Kazanç',        CAST(I.ToplamTutar / 1000 AS INT),'Sipariþten kazanýlan puan'  FROM inserted I 
-	where I.Durum='Tamamlandý' AND I.SiparisID NOT IN 
-	(SELECT SiparisID FROM MusteriPuanlari WHERE IslemTipi = 'Kazanç');
+	SELECT  I.MusteriID,I.SiparisID,'KazanÃ§',        CAST(I.ToplamTutar / 1000 AS INT),'Siparisten kazanilan puan'  FROM inserted I 
+	where I.Durum='Tamamlandi' AND I.SiparisID NOT IN 
+	(SELECT SiparisID FROM MusteriPuanlari WHERE IslemTipi = 'KazanÃ§');
 END
 GO
 
 --Siparis Durum Guncelleme
-UPDATE  Siparisler SET Durum='Tamamlandý' WHERE SiparisID=1
-UPDATE  Siparisler SET Durum='Tamamlandý' WHERE SiparisID=2
-UPDATE  Siparisler SET Durum='Tamamlandý' WHERE SiparisID=3
-UPDATE  Siparisler SET Durum='Tamamlandý' WHERE SiparisID=4
-UPDATE  Siparisler SET Durum='Tamamlandý' WHERE SiparisID=5
+UPDATE  Siparisler SET Durum='Tamamlandi' WHERE SiparisID=1
+UPDATE  Siparisler SET Durum='Tamamlandi' WHERE SiparisID=2
+UPDATE  Siparisler SET Durum='Tamamlandi' WHERE SiparisID=3
+UPDATE  Siparisler SET Durum='Tamamlandi' WHERE SiparisID=4
+UPDATE  Siparisler SET Durum='Tamamlandi' WHERE SiparisID=5
 
 
 -- Odemeler Tablosuna Siparis Tablosundan Dinamik SiparisTutarini Ceken TRIGGER
@@ -53,9 +53,9 @@ END;
 GO
 
 --Odemeler Tablosu Durum Guncelleme
-update Odemeler set Durumu='Ödeme Yapildi' where OdemeID=5
+update Odemeler set Durumu='Ã–deme Yapildi' where OdemeID=5
 
---Faturalar Tablosuna Dinamik Olarak Tutar Çekip Vergi Oranýnýyla Birlikte Ekleyen TRIGGER
+--Faturalar Tablosuna Dinamik Olarak Tutar Ã‡ekip Vergi Oraniniyla Birlikte Ekleyen TRIGGER
 GO
 CREATE TRIGGER Fatura_TutarHesapla
 ON FATURALAR
@@ -73,7 +73,7 @@ BEGIN
 END;
 GO
 
---KargoTakip Tablosunda Durum Kýsmý Teslim Edildi Olunca Dinamik Teslim Tarihi Ekleyen TRIGGER
+--KargoTakip Tablosunda Durum Kismi Teslim Edildi Olunca Dinamik Teslim Tarihi Ekleyen TRIGGER
 GO
 CREATE TRIGGER TeslimTarihi_Guncelleme
 ON KargoTakip
@@ -84,11 +84,11 @@ BEGIN
 END
 GO
 
---KargoTakip Durum Güncelleme
+--KargoTakip Durum GÃ¼ncelleme
 UPDATE KargoTakip SET Durum='Teslim Edildi' WHERE TakipID=5
 
 
---Sepet Tutarýný Dinamik Olarak Güncelleyen TRIGGER
+--Sepet Tutarini Dinamik Olarak GÃ¼ncelleyen TRIGGER
 GO
 CREATE TRIGGER SepetDetayGuncelleme
 ON SepetDetay
@@ -104,4 +104,5 @@ BEGIN
         GROUP BY SepetID
     ) T ON S.SepetID = T.SepetID;
 END
+
 GO
