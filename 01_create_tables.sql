@@ -1,7 +1,7 @@
-CREATE DATABASE E_T›CARET
+CREATE DATABASE E_TICARET
 
 
---Kullanicilar Tablosu  Olu˛turma
+--Kullanicilar Tablosu  Olusturma
 CREATE TABLE Kullanicilar(
 KullaniciID INT PRIMARY KEY IDENTITY(1,1),
 Ad varchar(20) NOT NULL,
@@ -15,13 +15,13 @@ KayitTarihi datetime DEFAULT GETDATE(),
 );
 
 
---Roller Tablosu Olu˛turma
+--Roller Tablosu Olusturma
 CREATE TABLE Roller(
 RolID INT PRIMARY KEY IDENTITY(1,1),
 RolAd  varchar(30),
 );
 
---KullaniciRol Tablosu Olu˛turma
+--KullaniciRol Tablosu Olusturma
 CREATE TABLE KullaniciRol(
 KullaniciID INT,
 RolID INT,
@@ -30,7 +30,7 @@ FOREIGN KEY (KullaniciID) REFERENCES Kullanicilar(KullaniciID),
  FOREIGN KEY (RolID) REFERENCES Roller(RolID)
 );
 
---Musteriler Tablosu Olu˛turma
+--Musteriler Tablosu Olusturma
 CREATE TABLE Musteriler(
 MusteriID INT PRIMARY KEY IDENTITY (1,1),
 Ad varchar(20) NOT NULL,
@@ -41,14 +41,14 @@ TelNo nvarchar(50) NOT NULL,
 Sifre nvarchar(50) NOT NULL
 );
 
- --Ulkeler Tablosu Olu˛turma
+ --Ulkeler Tablosu Olusturma
 CREATE TABLE Ulkeler(
 UlkeID INT PRIMARY KEY IDENTITY (1,1),
 UlkeAd varchar(30) NOT NULL,
 );
 
 
---Iller Tablosu Olu˛turma
+--Iller Tablosu Olusturma
 CREATE TABLE Iller(
 IlID INT PRIMARY KEY IDENTITY (1,1),
 IlAd varchar(30) NOT NULL,
@@ -56,7 +56,7 @@ UlkeID INT,
 CONSTRAINT "FK_Il_Ulke" FOREIGN KEY (UlkeID) REFERENCES Ulkeler(UlkeID)
 );
 
---Ilceler Tablosu Olu˛turma
+--Ilceler Tablosu Olusturma
 CREATE TABLE Ilceler(
 IlceID INT PRIMARY KEY IDENTITY (1,1),
 IlceAd varchar(30) NOT NULL,
@@ -64,16 +64,16 @@ IlID INT,
  FOREIGN KEY (IlID) REFERENCES Iller(IlID)
 );
 
---Adresler Tablosu Olu˛turma
+--Adresler Tablosu Olusturma
 CREATE TABLE Adresler(
 AdresID INT PRIMARY KEY IDENTITY (1,1),
 UlkeID INT FOREIGN KEY REFERENCES Ulkeler(UlkeID),
 IlID INT FOREIGN KEY REFERENCES Iller(IlID),
 IlceID INT FOREIGN KEY REFERENCES Ilceler(IlceID),
-Ac˝kAdres varchar(200)
+Ac√ΩkAdres varchar(200)
 );
 
---MusteriAdres Tablosu Olu˛turma
+--MusteriAdres Tablosu Olusturma
 CREATE TABLE MusteriAdres(
 M_AdresID INT PRIMARY KEY IDENTITY (1,1),
 MusteriID INT,
@@ -86,42 +86,42 @@ AdresID INT,
 CREATE TABLE Siparisler(
 SiparisID  INT PRIMARY KEY IDENTITY (1,1),
 MusteriID INT NOT NULL,
-S˝parisTarihi datetime DEFAULT GETDATE(),
+S√ΩparisTarihi datetime DEFAULT GETDATE(),
 ToplamTutar FLOAT NOT NULL,
 Durum nvarchar(50) DEFAULT 'Beklemede',
  FOREIGN KEY (MusteriID) REFERENCES Musteriler(MusteriID)
 );
 
---Sepet Tablosunu Olu˛turduktan Sonra
+--Sepet Tablosunu Olusturduktan Sonra
 ALTER TABLE Siparisler ADD SepetID INT;
 ALTER TABLE Siparisler
 ADD FOREIGN KEY (SepetID) REFERENCES Sepet(SepetID);
 
---MusteriPuanlari Tablosu Olu˛turma
+--MusteriPuanlari Tablosu Olusturma
 CREATE TABLE MusteriPuanlari(
 PuanID INT PRIMARY KEY IDENTITY (1,1),
 MusteriID INT NOT NULL,
 SiparisID INT NOT NULL,
-IslemTipi nvarchar(30) CHECK( IslemTipi IN('KazanÁ','Harcama')),
+IslemTipi nvarchar(30) CHECK( IslemTipi IN('Kazan√ß','Harcama')),
 PuanDegeri INT NOT NULL,
 Aciklama varchar(200),
  FOREIGN KEY (MusteriID) REFERENCES Musteriler(MusteriID),
  FOREIGN KEY (SiparisID) REFERENCES Siparisler(SiparisID)
 );
 
---Markalar Tablosu Olu˛turma
+--Markalar Tablosu Olusturma
 CREATE TABLE Markalar(
 MarkaID INT PRIMARY KEY IDENTITY (1,1),
 MarkaAdi nvarchar(100) NOT NULL UNIQUE
 );
 
---Kategoriler Tablosu Olu˛turma
+--Kategoriler Tablosu Olusturma
 CREATE TABLE Kategoriler(
 KategoriID INT PRIMARY KEY IDENTITY (1,1),
 KategoriAd nvarchar(100) NOT NULL
 );
 
---Urunler Tablosu Olu˛turma
+--Urunler Tablosu Olusturma
 CREATE TABLE Urunler(
 UrunID INT PRIMARY KEY IDENTITY (1,1),
 UrunAd varchar(30) NOT NULL,
@@ -133,13 +133,13 @@ MarkaID INT NOT NULL,
 FOREIGN KEY (MarkaID) REFeRENCES Markalar(MarkaID)
 );
 
---Etiketler Tablosu Olu˛turma
+--Etiketler Tablosu Olusturma
 CREATE TABLE Etiketler(
 EtiketID INT PRIMARY KEY IDENTITY (1,1),
 EtiketAdi nvarchar(50) NOT NULL UNIQUE
 );
 
---UrunEtiketleri Tablosu Olu˛turma
+--UrunEtiketleri Tablosu Olusturma
 CREATE TABLE UrunEtiketleri(
 UrunID INT NOT NULL,
 EtiketID INT NOT NULL,
@@ -148,7 +148,7 @@ FOREIGN KEY (UrunID) REFERENCES Urunler(UrunID),
 FOREIGN KEY (EtiketID) REFERENCES Etiketler(EtiketID)
 );
 
---UrunYorumlari Tablosu Olu˛turma
+--UrunYorumlari Tablosu Olusturma
 CREATE TABLE UrunYorumlari(
 YorumID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 UrunID INT NOT NULL,
@@ -160,13 +160,13 @@ FOREIGN KEY (UrunID) REFERENCES Urunler(UrunID),
 FOREIGN KEY (MusteriID) REFERENCES Musteriler(MusteriID)
 );
 
---Resimler Tablosu Olu˛turma
+--Resimler Tablosu Olusturma
 CREATE TABLE Resimler(
 ResimID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 ResimURL nvarchar(500),
 );
 
---UrunResim Tablosu Olu˛turma
+--UrunResim Tablosu Olusturma
 CREATE TABLE UrunResim(
 ResimID INT NOT NULL,
 UrunID INT NOT NULL,
@@ -175,14 +175,14 @@ FOREIGN KEY (UrunID) REFERENCES Urunler(UrunID),
 FOREIGN KEY (ResimID) REFERENCES Resimler(ResimID)
 );
 
---Magazalar Tablosu Olu˛turma
+--Magazalar Tablosu Olusturma
 CREATE TABLE Magazalar(
 MagazaID INT PRIMARY KEY IDENTITY (1,1),
 MagazaAdi varchar(100),
 Konum NVARCHAR(500)
 );
 
---UrunStok Tablosu Olu˛turma
+--UrunStok Tablosu Olusturma
 CREATE TABLE UrunStok(
 StokID INT PRIMARY KEY IDENTITY (1,1),
 UrunID INT NOT NULL,
@@ -192,13 +192,13 @@ FOREIGN KEY (UrunID) REFERENCES Urunler(UrunID),
 FOREIGN KEY (MagazaID) REFERENCES Magazalar(MagazaID)
 );
 
---OdemeYontemleri Tablosu Olu˛turma
+--OdemeYontemleri Tablosu Olusturma
 CREATE TABLE OdemeYontemleri(
 YontemID INT PRIMARY KEY IDENTITY (1,1),
 YontemAdi varchar(100) NOT NULL
 );
 
---Odemeler Tablosu Olu˛turma
+--Odemeler Tablosu Olusturma
 CREATE TABLE Odemeler(
 OdemeID INT PRIMARY KEY IDENTITY (1,1),
 SiparisID INT NOT NULL,
@@ -210,7 +210,7 @@ FOREIGN KEY (SiparisID) REFERENCES Siparisler(SiparisID),
 FOREIGN KEY (YontemID) REFERENCES OdemeYontemleri(YontemID)
 );
 
- --Faturalar Tablosu Olu˛turma
+ --Faturalar Tablosu Olusturma
 CREATE TABLE Faturalar(
 FaturaID INT PRIMARY KEY IDENTITY (1,1),
 SiparisID INT NOT NULL,
@@ -220,7 +220,7 @@ Tutar float NOT NULL,
 FOREIGN KEY (SiparisID) REFERENCES Siparisler(SiparisID),
 );
 
---SiparisDetay Tablosu Olu˛turma
+--SiparisDetay Tablosu Olusturma
 CREATE TABLE SiparisDetay(
 DetayID INT PRIMARY KEY IDENTITY(1,1),
 SiparisID INT NOT NULL,
@@ -232,13 +232,13 @@ FOREIGN KEY (SiparisID) REFERENCES Siparisler(SiparisID),
 FOREIGN KEY (UrunID) REFERENCES Urunler(UrunID)
 );
 
---KargoSirketleri Tablosu Olu˛turma
+--KargoSirketleri Tablosu Olusturma
 CREATE TABLE KargoSirketleri(
 SirketID INT PRIMARY KEY IDENTITY (1,1),
 SirketAd varchar(100)
 );
 
---KargoTakip Tablosu Olu˛turma
+--KargoTakip Tablosu Olusturma
 CREATE TABLE KargoTakip(
 TakipID INT PRIMARY KEY IDENTITY (1,1),
 SiparisID INT NOT NULL,
@@ -253,7 +253,7 @@ FOREIGN KEY (SiparisID) REFERENCES Siparisler(SiparisID),
 FOREIGN KEY (SirketID) REFERENCES KargoSirketleri(SirketID)
 );
 
---Raporlar Tablosu Olu˛turma
+--Raporlar Tablosu Olusturma
 CREATE TABLE Raporlar(
 RaporID INT PRIMARY KEY IDENTITY(1,1),
 RaporAd varchar(50) NOT NULL,
@@ -265,7 +265,7 @@ Aciklama nvarchar(400),
 FOREIGN KEY (KullaniciID) REFERENCES Kullanicilar(KullaniciID)
 );
 
---Kayitlar Tablosu Olu˛turma
+--Kayitlar Tablosu Olusturma
 CREATE TABLE Kayitlar(
 KayitID INT PRIMARY KEY IDENTITY (1,1),
 KullaniciID INT NOT NULL,
@@ -275,7 +275,7 @@ IPAdres NVARCHAR(50) NULL,
 FOREIGN KEY (KullaniciID) REFERENCES Kullanicilar(KullaniciID)
 );
 
---SistemAyarlar Tablosu Olu˛turma
+--SistemAyarlar Tablosu Olusturma
 CREATE TABLE SistemAyarlar (
 AyarID INT IDENTITY(1,1) PRIMARY KEY,
 AyarAdi NVARCHAR(100) NOT NULL,  
@@ -284,7 +284,7 @@ Aciklama NVARCHAR(255) NULL,
 GuncellemeTarihi DATETIME DEFAULT GETDATE()
 );
 
---Kampanyalar Tablosu Olu˛turma
+--Kampanyalar Tablosu Olusturma
 CREATE TABLE Kampanyalar (
 KampanyaID INT IDENTITY(1,1) PRIMARY KEY,
 KampanyaAdi NVARCHAR(100) NOT NULL,
@@ -296,32 +296,32 @@ BitisTarihi DATETIME NOT NULL,
 MinimumSepetTutari DECIMAL(10,2) NULL, 
 );
 
---Kampanya›cerik Tablosu Olu˛turma
-CREATE TABLE Kampanya›cerik (
+--Kampanya√ùcerik Tablosu Olusturma
+CREATE TABLE Kampanya√ùcerik (
 ID INT IDENTITY (1,1) PRIMARY KEY ,
 KampanyaID INT FOREIGN KEY REFERENCES Kampanyalar(KampanyaID),
 KapsamTipi NVARCHAR(20) NOT NULL,  
 KapsamID INT NULL                
 );
 
---Diller Tablosu Olu˛turma
+--Diller Tablosu Olusturma
 CREATE TABLE Diller (
 DilID INT  PRIMARY KEY IDENTITY (1,1),
 DilKodu NVARCHAR(10) NOT NULL, -- tr, en
-DilAdi NVARCHAR(50) NOT NULL   -- T¸rkÁe, English
+DilAdi NVARCHAR(50) NOT NULL   -- T√ºrk√ße, English
 );
 
---Ceviriler Tablosu Olu˛turma
+--Ceviriler Tablosu Olusturma
 CREATE TABLE Ceviriler (
 CeviriID INT  PRIMARY KEY IDENTITY (1,1),
-TabloAdi NVARCHAR(50) NOT NULL,   -- ÷rn: Urunler
-KayitID INT NOT NULL,             -- ÷rn: UrunID
-KolonAdi NVARCHAR(50) NOT NULL,   -- ÷rn: UrunAdi
+TabloAdi NVARCHAR(50) NOT NULL,   -- √ñrn: Urunler
+KayitID INT NOT NULL,             -- √ñrn: UrunID
+KolonAdi NVARCHAR(50) NOT NULL,   -- √ñrn: UrunAdi
 DilID INT FOREIGN KEY REFERENCES Diller(DilID),
 Deger NVARCHAR(255) NOT NULL
 );
 
---Sepet Tablosu Olu˛turma
+--Sepet Tablosu Olusturma
 CREATE TABLE Sepet(
 SepetID INT PRIMARY KEY IDENTITY (1,1),
 KullaniciID INT NOT NULL FOREIGN KEY REFERENCES Musteriler(MusteriID),
@@ -330,7 +330,7 @@ ToplamTutar DECIMAL(10,2) DEFAULT 0,
 Durum NVARCHAR(20) DEFAULT 'Aktif'
 );
 
---SepetDetay Tablosu Olu˛turma
+--SepetDetay Tablosu Olusturma
 CREATE TABLE SepetDetay(
 DetayID INT PRIMARY KEY IDENTITY (1,1),
 SepetID INT NOT NULL FOREIGN KEY REFERENCES Sepet(SepetID),
@@ -339,4 +339,5 @@ Adet INT NOT NULL,
 BirimFiyat FLOAT NOT NULL,  
 AraToplam AS (Adet * BirimFiyat) PERSISTED
 );
+
 
